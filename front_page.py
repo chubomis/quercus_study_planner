@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from grab_token import grab_token
+from download_file import download_file
 
 BASE = "https://q.utoronto.ca/api/v1"
 TOKEN = grab_token()
@@ -48,4 +49,21 @@ csc311_files_r = requests.get(f"{BASE}/courses/{csc311_id}/files",
                         headers=headers)
 
 csc311_files_page = csc311_files_r.json()
-print(csc311_files_page)
+#print(csc311_files_page)
+
+csc311_syllabus = None
+for f in csc311_files_page:
+    if "syllabus" in f.get("display_name", "").lower():
+        csc311_syllabus = f
+
+if csc311_syllabus is not None:
+    print(csc311_syllabus)
+    print("######################################")
+    print(csc311_syllabus['display_name'])
+    print(csc311_syllabus['url'])
+    url = csc311_syllabus['url'] # URL to download
+else:
+    print("Not found")
+
+download_file(url, "Syllabuses", 
+              csc311_syllabus["filename"], headers)
