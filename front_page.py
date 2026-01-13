@@ -25,6 +25,7 @@ courses = r.json()
 
 csc311_id = 416373
 
+# Accessing key data from the table from home page
 csc311_r = requests.get(f"{BASE}/courses/{csc311_id}/front_page", 
                         headers=headers)
 csc311_page = csc311_r.json()
@@ -40,4 +41,11 @@ rows = table.find_all("tr")
 for row in rows:
     cells = row.find_all("td")
     cell_text = [cell.get_text(strip=True) for cell in cells]
-    print(cell_text)
+    #print(cell_text)
+
+# Accessing Syllabus Data
+csc311_files_r = requests.get(f"{BASE}/courses/{csc311_id}/files", 
+                        headers=headers)
+
+csc311_files_page = csc311_files_r.json()
+print(csc311_files_page)
