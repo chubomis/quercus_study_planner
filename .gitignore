@@ -1,0 +1,10 @@
+# Secrets
+token.txt
+grab_token.py
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment files
+.env
